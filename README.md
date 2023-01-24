@@ -166,7 +166,7 @@ $chief = new Chief(new SynchronousCommandBus, [new LoggingDecorator($logger)]);
     
 Now, whenever `Chief::execute()` is called, the command will be passed to `LoggingDecorator::execute()`, which will perform some log action, and then pass the command to the relevant `CommandHandler`.
 
-Chief provides you with two decorators out-the-box:
+Chief provides you with some decorators out-the-box:
 
 - *LoggingDecorator*: Log before and after all executions to a `Psr\Log\LoggerInterface`
 - *EventDispatchingDecorator*: Dispatch an event to a `Chief\Decorators\EventDispatcher` after every command execution.
@@ -365,6 +365,13 @@ $chief = new Chief(new \Chief\Busses\SynchronousCommandBus($resolver));
 ```php
 $container = new \League\Container\Container;
 $resolver = new NativeCommandHandlerResolver(new \Chief\Bridge\League\LeagueContainer($container));
+$chief = new Chief(new \Chief\Busses\SynchronousCommandBus($resolver));
+```
+
+`Psr\Container` compatible container:
+
+```php
+$resolver = new NativeCommandHandlerResolver(new \Chief\Bridge\Psr\PsrContainer($psrContainer));
 $chief = new Chief(new \Chief\Busses\SynchronousCommandBus($resolver));
 ```
 
